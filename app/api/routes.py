@@ -5,6 +5,7 @@ API routes for property search functionality.
 import logging
 from typing import Annotated
 
+import anthropic
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from app.config import Settings, get_settings
@@ -73,11 +74,25 @@ async def search_properties(
             detail=f"Could not understand the property requirements: {e}",
         ) from e
 
+    except anthropic.APIStatusError as e:
+        logger.error("Anthropic API error: %s", e.message)
+        raise HTTPException(
+            status_code=status.HTTP_502_BAD_GATEWAY,
+            detail=f"Claude API error: {e.message}",
+        ) from e
+
+    except anthropic.APIConnectionError as e:
+        logger.error("Failed to connect to Anthropic API: %s", e)
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Failed to connect to Claude API. Please try again later.",
+        ) from e
+
     except Exception as e:
         logger.exception("Unexpected error during search")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="An unexpected error occurred while processing your search.",
+            detail=f"An unexpected error occurred: {type(e).__name__}: {e}",
         ) from e
 
 
@@ -111,4 +126,10 @@ async def extract_criteria(
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail=str(e),
+        ) from e
+
+    except anthropic.APIStatusError as e:
+        raise HTTPException(
+            status_code=status.HTTP_502_BAD_GATEWAY,
+            detail=f"Claude API error: {e.message}",
         ) from e

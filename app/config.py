@@ -21,14 +21,14 @@ class Settings(BaseSettings):
 
     # API Keys
     anthropic_api_key: str
-    propertydata_api_key: str
+    patma_api_key: str
 
     # Claude configuration
     claude_model: str = "claude-sonnet-4-20250514"
     claude_max_tokens: int = 1024
 
-    # PropertyData API configuration
-    propertydata_base_url: str = "https://api.propertydata.co.uk"
+    # Patma API configuration
+    patma_base_url: str = "https://app.patma.co.uk/api"
 
     # Application settings
     debug: bool = False

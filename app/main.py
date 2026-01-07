@@ -2,7 +2,7 @@
 Property Search API - FastAPI application entry point.
 
 A property recommendation service that uses Claude to parse natural language
-property requirements and searches PropertyData.co.uk for matching listings.
+property requirements and searches Patma API for matching UK listings.
 """
 
 import logging
@@ -36,8 +36,8 @@ async def lifespan(app: FastAPI):
     # Validate API keys are present (will raise if missing)
     if not settings.anthropic_api_key:
         raise RuntimeError("ANTHROPIC_API_KEY is required")
-    if not settings.propertydata_api_key:
-        raise RuntimeError("PROPERTYDATA_API_KEY is required")
+    if not settings.patma_api_key:
+        raise RuntimeError("PATMA_API_KEY is required")
 
     logger.info("Configuration validated successfully")
     yield

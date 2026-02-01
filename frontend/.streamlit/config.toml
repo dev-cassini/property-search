@@ -7,10 +7,10 @@ enableCORS = false
 gatherUsageStats = false
 
 [theme]
-primaryColor = "#2563eb"
-backgroundColor = "#ffffff"
-secondaryBackgroundColor = "#f8fafc"
-textColor = "#1e293b"
+primaryColor = "#52796F"
+backgroundColor = "#CAD2C5"
+secondaryBackgroundColor = "#84A98C"
+textColor = "#2F3E46"
 font = "sans serif"
 
 [client]

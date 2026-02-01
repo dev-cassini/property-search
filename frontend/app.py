@@ -257,10 +257,23 @@ def main():
     st.markdown(
         """
         <style>
+        /* Color palette:
+           #CAD2C5 - Light sage green (background)
+           #84A98C - Medium sage green (secondary)
+           #52796F - Dark teal green (primary/accent)
+           #354F52 - Very dark teal (secondary text)
+           #2F3E46 - Darkest teal (primary text)
+        */
+
         /* Hide streamlit branding */
         #MainMenu {visibility: hidden;}
         footer {visibility: hidden;}
         header {visibility: hidden;}
+
+        /* Global background */
+        .stApp {
+            background-color: #CAD2C5 !important;
+        }
 
         /* Center and constrain content */
         .main .block-container {
@@ -282,11 +295,22 @@ def main():
             z-index: 1000;
         }
 
-        /* Style the chat input */
-        .stChatInput > div {
+        /* Style the chat input - reset all nested containers */
+        .stChatInput,
+        .stChatInput > div,
+        .stChatInput > div > div,
+        .stChatInput > div > div > div,
+        .stChatInput [data-testid] {
+            background-color: transparent !important;
+            border: none !important;
             border-radius: 24px !important;
-            border: 1px solid #e0e0e0 !important;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+            box-shadow: none !important;
+        }
+
+        /* Style only the main visible container */
+        .stChatInput > div {
+            border: 1px solid #84A98C !important;
+            box-shadow: 0 2px 8px rgba(47, 62, 70, 0.15) !important;
             background-color: #ffffff !important;
             overflow: hidden !important;
         }
@@ -297,6 +321,15 @@ def main():
             background-color: #ffffff !important;
             border: none !important;
             outline: none !important;
+            color: #2F3E46 !important;
+            border-radius: 24px !important;
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+        }
+
+        .stChatInput textarea::placeholder {
+            color: #354F52 !important;
+            opacity: 0.7;
         }
 
         .stChatInput textarea:focus {
@@ -307,7 +340,7 @@ def main():
 
         /* Fix inner container backgrounds */
         .stChatInput > div > div {
-            background-color: #ffffff !important;
+            background-color: transparent !important;
             border: none !important;
         }
 
@@ -318,8 +351,8 @@ def main():
         }
 
         .stChatInput > div:focus-within {
-            border-color: #2563eb !important;
-            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2) !important;
+            border-color: #52796F !important;
+            box-shadow: 0 0 0 2px rgba(82, 121, 111, 0.3) !important;
         }
 
         /* Chat message styling */
@@ -327,6 +360,21 @@ def main():
             max-width: 700px;
             margin: 0 auto;
             padding: 1rem;
+            background-color: #84A98C !important;
+            border-radius: 12px;
+        }
+
+        .stChatMessage [data-testid="stMarkdownContainer"] {
+            color: #2F3E46 !important;
+        }
+
+        /* User message styling */
+        [data-testid="stChatMessage"][data-testid*="user"] {
+            background-color: #52796F !important;
+        }
+
+        [data-testid="stChatMessage"][data-testid*="user"] [data-testid="stMarkdownContainer"] {
+            color: #CAD2C5 !important;
         }
 
         /* Welcome text styling */
@@ -343,18 +391,40 @@ def main():
         .welcome-title {
             font-size: 2.5rem;
             font-weight: 600;
-            color: #1a1a1a;
+            color: #2F3E46;
             margin-bottom: 0.5rem;
         }
 
         .welcome-subtitle {
             font-size: 1.1rem;
-            color: #666;
+            color: #354F52;
         }
 
         /* Clear button styling */
         .stButton > button {
             border-radius: 8px;
+            background-color: #52796F !important;
+            color: #CAD2C5 !important;
+            border: none !important;
+        }
+
+        .stButton > button:hover {
+            background-color: #354F52 !important;
+            color: #CAD2C5 !important;
+        }
+
+        /* Links */
+        a {
+            color: #52796F !important;
+        }
+
+        a:hover {
+            color: #354F52 !important;
+        }
+
+        /* Spinner */
+        .stSpinner > div {
+            border-top-color: #52796F !important;
         }
 
         /* When there are messages, move chat input to bottom */

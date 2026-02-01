@@ -257,6 +257,9 @@ def main():
     st.markdown(
         """
         <style>
+        /* Import Rubik font from Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap');
+
         /* Color palette:
            #CAD2C5 - Light sage green (background)
            #84A98C - Medium sage green (secondary)
@@ -264,6 +267,11 @@ def main():
            #354F52 - Very dark teal (secondary text)
            #2F3E46 - Darkest teal (primary text)
         */
+
+        /* Apply Rubik font globally */
+        * {
+            font-family: 'Rubik', sans-serif !important;
+        }
 
         /* Hide streamlit branding */
         #MainMenu {visibility: hidden;}
